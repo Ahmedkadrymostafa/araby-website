@@ -2,7 +2,7 @@
 import Banner from "../components/Banner"
 import PrimaryHeader from "../components/PrimaryHeader"
 export default function EgyptLayout({
-    children, // will be a page or nested layout
+    children, 
   }: {
     children: React.ReactNode
   }) {

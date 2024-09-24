@@ -1,4 +1,4 @@
-import { db } from '../firebase'; // Adjust the path to your Firebase config
+import { db } from '../firebase'; 
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore"; 
 import { DCard } from '../types/dCard';
 
@@ -10,7 +10,6 @@ type DataLimited = Data & {
   limit: number
 }
 
-// Function to get data from Firestore
 export const GetDalil = async (props: Data) => {
   try {
     const snapshot = await getDocs(collection(db, props.query));
@@ -21,31 +20,31 @@ export const GetDalil = async (props: Data) => {
     const items: DCard[] = snapshot.docs.map(doc => {
       const data = doc.data();
 
-      const timestamp = data.date?.toDate(); // Convert Firestore Timestamp to JS Date
+      const timestamp = data.date?.toDate(); 
       const formattedDate = timestamp
-        ? timestamp.toLocaleDateString('ar-EG', { // Use Arabic locale
-            weekday: 'long', // Full name of the weekday
-            day: 'numeric', // Day of the month
-            month: 'long', // Full name of the month
-            year: 'numeric' // Full numeric year
+        ? timestamp.toLocaleDateString('ar-EG', { 
+            weekday: 'long', 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
           })
-        : null; // Default to null if date is missing
+        : null; 
 
       return {
         id: doc.id,
-        name: data.name , // Default value if name is missing
+        name: data.name , 
         address: data.address,
-        phone: data.phone , // Default value if address is missing
-        views: data.views, // Default to 0 views if missing
-        likes: data.likes, // Default to 0 likes if missing
+        phone: data.phone , 
+        views: data.views, 
+        likes: data.likes, 
         date: formattedDate,
         pageUrl: props.pageUrl
       };
     });
 
-    console.log(items); // Log the results
+    console.log(items); 
 
-    return items; // Return the results
+    return items;
   } catch (error) {
     console.error("Error fetching data from Firestore:", error);
     throw new Error('Failed to fetch data');
@@ -54,42 +53,38 @@ export const GetDalil = async (props: Data) => {
 
 export const GetDalilLimited = async (props: DataLimited) => {
   try {
-    // Query to get the last 25 published items, ordered by date in descending order
     const q = query(collection(db, props.query), orderBy('date', 'desc'), limit(props.limit));
 
-    // Get the documents
     const snapshot = await getDocs(q);
 
-    // Map the documents into an array of objects
     const items = snapshot.docs.map(doc => {
       const data = doc.data();
 
-      // Convert Firestore timestamp to human-readable format (similar to September 21, 2024 at 7:10:37 PM UTC+3)
-      const timestamp = data.date?.toDate(); // Convert Firestore Timestamp to JS Date
+      const timestamp = data.date?.toDate(); 
       const formattedDate = timestamp
-        ? timestamp.toLocaleDateString('ar-EG', { // Use Arabic locale
-            weekday: 'long', // Full name of the weekday
-            day: 'numeric', // Day of the month
-            month: 'long', // Full name of the month
-            year: 'numeric' // Full numeric year
+        ? timestamp.toLocaleDateString('ar-EG', { 
+            weekday: 'long',
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
           })
-        : null; // Default to null if date is missing
+        : null; 
 
       return {
         id: doc.id,
-        name: data.name || '', // Default value if name is missing
-        address: data.address || '', // Default value if address is missing
-        // phone: data.phone || '', // Default value if phone is missing
-        views: data.views || 0, // Default to 0 views if missing
-        likes: data.likes || 0, // Default to 0 likes if missing
+        name: data.name || '', 
+        address: data.address || '', 
+        // phone: data.phone || '', 
+        views: data.views || 0,
+        likes: data.likes || 0,
         date: formattedDate,
-        pageUrl: props.pageUrl // Use the formatted date
+        pageUrl: props.pageUrl
       };
     });
 
-    // console.log(items); // Log the results
+    // console.log(items); 
 
-    return items; // Return the results
+    return items; 
   } catch (error) {
     console.error("Error fetching data from Firestore:", error);
     throw new Error('Failed to fetch data');
