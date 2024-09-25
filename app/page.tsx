@@ -11,7 +11,7 @@ import { GetDalilLimited } from './controllers/GetDalil'
 
 
 export default async function Home() {
-  const dalilEgyptLimited = await GetDalilLimited({ query:"egypt/dalil/data", limit:25, pageUrl:"egypt" });
+  const dalilEgyptLimited = await GetDalilLimited({ query:"egypt/dalil/data", limit:25, pageUrl:"egypt/guide" });
   const dalilSaudiLimited = await GetDalilLimited({ query:"saudi/dalil/data", limit:25, pageUrl:"saudi" });
 
   const pages = [
@@ -40,7 +40,7 @@ export default async function Home() {
       <MainCountryHeading heading="جمهورية مصر العربية" pageUrl="egypt" />
       <DalilCountry 
         data={dalilEgyptLimited} 
-        pageUrl="egypt" 
+        pageUrl="egypt/guide" 
         title='اكتشف مصر بسهولة' 
         description='هل تبحث عن مكان معين في مصر؟ دليلنا الشامل يوفر لك كل المعلومات التي تحتاجها، من العناوين وأرقام الهواتف. اكتشف مصر بسهولة ويسر' 
       />

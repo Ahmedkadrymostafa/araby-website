@@ -6,7 +6,7 @@ const page = () => {
   const includedProps = {
     firstoreQuery: "egypt/dalil/data",
     limitOfItems: 25,
-    pageUrl: "egypt",
+    pageUrl: "egypt/guide",
     countryNameInArabic: "مصر"
   }
   return (

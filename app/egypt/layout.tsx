@@ -1,5 +1,6 @@
 // import SecondaryHeader from "../components/SecondryHeader"
 import Banner from "../components/Banner"
+import GoBack from "../components/GoBack"
 import PrimaryHeader from "../components/PrimaryHeader"
 export default function EgyptLayout({
     children,
@@ -17,6 +18,7 @@ export default function EgyptLayout({
       <div>
         <PrimaryHeader pages={pages} />
         <Banner image="egypt-banner-image" heading="اكتشف أفضل الوجهات في الوطن العربي" description="استمتع بمقالات حصرية ودليل شامل لأهم الأماكن والمعالم في دولنا العربية. اكتشف الجمال المخفي والمغامرات التي تنتظرك في كل زاوية من وطننا العربي" />
+        <GoBack />
         <hr />
         {children}
       </div>

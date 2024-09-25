@@ -1,11 +1,12 @@
 interface DCard {
     id: string
-    name: string,
-    address: string,
+    name: string | undefined,
+    address: string | undefined,
     phone?: string,
     views?: number,
     likes?: number,
     date?: string,
+    googleMapUrl?: string,
     pageUrl: string,
 }
 

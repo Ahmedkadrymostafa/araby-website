@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, FC } from 'react';
 import { getDocs, collection, query, limit, startAfter, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
-import { db } from '../firebase'; // Import your Firebase config
+import { db } from '..//firebase'; // Import your Firebase config
 import { DCard } from '../types/dCard';
 import InfiniteScroll from "react-infinite-scroll-component";
 import DalilCard from './DalilCard';

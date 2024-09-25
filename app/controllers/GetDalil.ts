@@ -1,10 +1,15 @@
 import { db } from '../firebase'; 
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore"; 
+import { collection, getDocs, query, orderBy, limit, getDoc, doc } from "firebase/firestore"; 
 import { DCard } from '../types/dCard';
+import formatFirestoreDate from './FormatFirestoreDate';
 
 type Data = {
   query: string,
   pageUrl: string,
+}
+type DataById = {
+  query: string,
+  id: string
 }
 type DataLimited = Data & {
   limit: number
@@ -50,6 +55,41 @@ export const GetDalil = async (props: Data) => {
     throw new Error('Failed to fetch data');
   }
 };
+
+
+export const GetDalilById = async (props: DataById): Promise<DCard | null> => {
+  try {
+    // Reference the document using the collection path and the document ID
+    const docRef = doc(db, props.query, props.id);
+    const docSnap = await getDoc(docRef);
+
+    // Check if the document exists
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+
+      const item: DCard = {
+        id: docSnap.id,
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+        views: data.views,
+        likes: data.likes,
+        date: formatFirestoreDate(data.date),
+        googleMapUrl: data.googleMapUrl,
+        pageUrl: "",
+      };
+
+      return item;
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document from Firestore:", error);
+    throw new Error('Failed to fetch document');
+  }
+};
+
 
 export const GetDalilLimited = async (props: DataLimited) => {
   try {
