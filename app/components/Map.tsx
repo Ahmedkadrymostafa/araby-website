@@ -35,7 +35,7 @@ const Map: FC<MapProps> = ({ mapUrl, name }) => {
     return (
         <div className="mt-9">
             <h1 className="text-xl main-color font-semibold text-center mb-3 flex justify-center items-center gap-2 max-sm:flex-col-reverse">
-                <MdOutlineKeyboardDoubleArrowDown className="text-3xl font-black" />
+                <MdOutlineKeyboardDoubleArrowDown className="text-3xl font-black animate-bounce" />
                 {`عنوان ${name} على خرائط جوجل`}
             </h1>
             <iframe

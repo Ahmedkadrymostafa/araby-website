@@ -11,8 +11,8 @@ import { GetDalilLimited } from './controllers/GetDalil'
 
 
 export default async function Home() {
-  const dalilEgyptLimited = await GetDalilLimited({ query:"egypt/dalil/data", limit:25, pageUrl:"egypt/guide" });
-  const dalilSaudiLimited = await GetDalilLimited({ query:"saudi/dalil/data", limit:25, pageUrl:"saudi" });
+  const dalilEgyptLimited = await GetDalilLimited({ query:"egypt/dalil/data", limit:25, pageUrl:"egypt/guide", source:"egypt" });
+  const dalilSaudiLimited = await GetDalilLimited({ query:"saudi/dalil/data", limit:25, pageUrl:"saudi/guide", source:"saudi" });
 
   const pages = [
     {
@@ -21,7 +21,7 @@ export default async function Home() {
     },
     {
       pageName: "السعودية",
-      pageUrl: "/egypt"
+      pageUrl: "/saudi"
     },
     {
       pageName: "الامارات",
@@ -48,7 +48,7 @@ export default async function Home() {
       <MainCountryHeading heading="المملكة العربية السعودية" pageUrl="saudi" />
       <DalilCountry 
         data={dalilSaudiLimited} 
-        pageUrl="saudi" 
+        pageUrl="saudi/guide" 
         title='اكتشف الاماكن و الوجهات السعودية' 
         description='هل تبحث عن مكان معين في مصر؟ دليلنا الشامل يوفر لك كل المعلومات التي تحتاجها، من العناوين وأرقام الهواتف. اكتشف مصر بسهولة ويسر' 
       />

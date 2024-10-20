@@ -62,7 +62,8 @@ const PaginatedList: FC<DCardData> = ({ data }) => {
                               views={e.views} 
                               likes={e.likes}
                               date={e.date} 
-                              pageUrl={e.pageUrl} 
+                              pageUrl={e.pageUrl}
+                              source={e.source}  
                           />
                       </SwiperSlide>
                   ))

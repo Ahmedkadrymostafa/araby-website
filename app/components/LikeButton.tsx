@@ -6,15 +6,16 @@ import { incrementViews } from '../controllers/EditDalil'; // Import your Firest
 
 interface LikeButtonProps {
   docId?: string;  // Document ID for the Firestore entry
+  source: string
   initialLikes?: number;  // Initial number of likes to display
   initialViews?: number;   // Initial number of views to display
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ docId, initialLikes = 0, initialViews = 0 }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ docId, source, initialLikes = 0, initialViews = 0 }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes);
   const [views, setViews] = useState(initialViews);
-
+  
   // Check local storage for liked state on mount
   useEffect(() => {
     if (docId) {
@@ -41,7 +42,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ docId, initialLikes = 0, initia
       return;
     }
     try {
-      await incrementViews(docId); // Call the function to increment views in Firestore
+      await incrementViews(docId, source); // Call the function to increment views in Firestore
       setViews(views + 1); // Update local state
     } catch (error) {
       console.error('Failed to increment views:', error);
@@ -58,7 +59,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ docId, initialLikes = 0, initia
     if (!liked) { // Ensure the user can't like again
       try {
         // Increment likes in the Firestore document
-        await incrementLikes(docId);
+        await incrementLikes(docId, source);
 
         // Update local state
         setLikes(likes + 1);

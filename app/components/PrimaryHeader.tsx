@@ -4,6 +4,7 @@ import logo from '../assets/ARABY.png'
 import { FC } from 'react'
 import PrimaryHeaderProps from '../types/header'
 import React, { useState } from 'react';
+import Link from 'next/link'
 
 const PrimaryHeader: FC<PrimaryHeaderProps> = ({ pages }) => {
     const [isActive, setIsActive] = useState(false);
@@ -14,12 +15,14 @@ const PrimaryHeader: FC<PrimaryHeaderProps> = ({ pages }) => {
 
   return (
     <header className='flex justify-between items-center h-28'>
-        <Image src={logo} width={190} height={70} alt='araby logo' />
+        <Link href="/">
+            <Image src={logo} width={190} height={70} alt='araby logo' />
+        </Link>
         <nav className={`mobile-nav-screen ${isActive ? 'active-menu' : ''}`}>
-            <ul className='flex justify-between gap-8 items-center'>
+            <ul className='flex justify-between gap-5 items-center'>
                 {pages?.map((e) => (
                     <li key={e.pageName}>
-                        <a href={e.pageUrl} className='animated-link text-gray-500 text-3xl hover:text-blue-950'>{e.pageName}</a>
+                        <a href={e.pageUrl} className='animated-link text-gray-500 text-xl hover:text-blue-950'>{e.pageName}</a>
                     </li>
                 ))}
             </ul>

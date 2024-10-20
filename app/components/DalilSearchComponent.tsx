@@ -11,77 +11,166 @@ import SearchLoading from "./SearchLoading";
 interface DalilSearch {
   firestoreQuery: string,
   pageUrl: string,
-  countryNameInArabic: string
+  countryNameInArabic: string,
+  source: string
 }
 
-const DalilSearchComponent: FC<DalilSearch> = ({ firestoreQuery, pageUrl, countryNameInArabic }) => {
+const DalilSearchComponent: FC<DalilSearch> = ({ firestoreQuery, pageUrl, countryNameInArabic, source }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState<DCard[]>([]);
   const [isLoading, setIsLoading] = useState(false)
   const [noResult, setNoResult] = useState(false)
 
-const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true)
+// const handleSearch = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setIsLoading(true)
 
-    if (searchTerm === "") {
-      setResults([]);
-      setIsLoading(false) 
-      return;
-    }
+//     if (searchTerm === "") {
+//       setResults([]);
+//       setIsLoading(false) 
+//       return;
+//     }
   
-    try {
-      const searchResults: DCard[] = [];
+//     try {
+//       const searchResults: DCard[] = [];
   
-      // Search by name
-      const nameQuery = query(
-        collection(db, firestoreQuery),
-        orderBy("name"),
-        startAt(searchTerm),
-        endAt(searchTerm + "\uf8ff") // This is to perform a "starts with" query
-      );
+//       // Search by name
+//       const nameQuery = query(
+//         collection(db, firestoreQuery),
+//         orderBy("name"),
+//         startAt(searchTerm),
+//         endAt(searchTerm + "\uf8ff") // This is to perform a "starts with" query
+//       );
   
-      const nameQuerySnapshot = await getDocs(nameQuery);
-      nameQuerySnapshot.forEach((doc) => {
-        const data = doc.data();
-        searchResults.push({ id: doc.id, name: data.name, address: data.address, views: data.views, likes: data.likes, date: formatFirestoreDate(data.date), pageUrl: pageUrl});
-      });
+//       const nameQuerySnapshot = await getDocs(nameQuery);
+//       nameQuerySnapshot.forEach((doc) => {
+//         const data = doc.data();
+//         searchResults.push({ id: doc.id, name: data.name, address: data.address, views: data.views, likes: data.likes, date: formatFirestoreDate(data.date), pageUrl: pageUrl});
+//       });
   
-      // Search by address
-      const addressQuery = query(
-        collection(db, firestoreQuery),
-        orderBy("address"),
-        startAt(searchTerm),
-        endAt(searchTerm + "\uf8ff")
-      );
+//       // Search by address
+//       const addressQuery = query(
+//         collection(db, firestoreQuery),
+//         orderBy("address"),
+//         startAt(searchTerm),
+//         endAt(searchTerm + "\uf8ff")
+//       );
   
-      const addressQuerySnapshot = await getDocs(addressQuery);
-      addressQuerySnapshot.forEach((doc) => {
-        const data = doc.data();
-        searchResults.push({ id: doc.id, name: data.name, address: data.address, views: data.views, likes: data.likes, date: data.date, pageUrl: pageUrl});
-      });
+//       const addressQuerySnapshot = await getDocs(addressQuery);
+//       addressQuerySnapshot.forEach((doc) => {
+//         const data = doc.data();
+//         searchResults.push({ id: doc.id, name: data.name, address: data.address, views: data.views, likes: data.likes, date: data.date, pageUrl: pageUrl});
+//       });
   
-      // Remove duplicates (in case the same document is found in both name and address search)
-      const uniqueResults = searchResults.filter((value, index, self) =>
-        index === self.findIndex((t) => t.id === value.id)
-      );
+//       // Remove duplicates (in case the same document is found in both name and address search)
+//       const uniqueResults = searchResults.filter((value, index, self) =>
+//         index === self.findIndex((t) => t.id === value.id)
+//       );
       
-      if (uniqueResults.length === 0) {
-        setNoResult(true);
-      }else {
-        setNoResult(false);
+//       if (uniqueResults.length === 0) {
+//         setNoResult(true);
+//       }else {
+//         setNoResult(false);
+//       }
+//       setResults(uniqueResults); // Set the merged and unique results
+//     } catch (error) {
+//       console.error("Error searching Firestore:", error);
+//     } finally {
+//         setIsLoading(false);
+//     }
+//   };
+
+
+const handleSearch = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  const searchPhrase = searchTerm.trim();
+
+  if (searchPhrase === "") {
+    setResults([]);
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const searchResults: DCard[] = [];
+
+    // Search by name
+    const nameQuery = query(
+      collection(db, firestoreQuery),
+      orderBy("name"),
+      startAt(searchPhrase),
+      endAt(searchPhrase + "\uf8ff") // This is to perform a "starts with" query
+    );
+
+    const nameQuerySnapshot = await getDocs(nameQuery);
+    nameQuerySnapshot.forEach((doc) => {
+      const data = doc.data();
+      // Only add documents where status is 'published'
+      if (data.status === "published") {
+        searchResults.push({
+          id: doc.id,
+          name: data.name,
+          address: data.address,
+          views: data.views,
+          likes: data.likes,
+          date: formatFirestoreDate(data.date),
+          pageUrl: pageUrl,
+          source: source
+        });
       }
-      setResults(uniqueResults); // Set the merged and unique results
-    } catch (error) {
-      console.error("Error searching Firestore:", error);
-    } finally {
-        setIsLoading(false);
+    });
+
+    // Search by address
+    const addressQuery = query(
+      collection(db, firestoreQuery),
+      orderBy("address"),
+      startAt(searchPhrase),
+      endAt(searchPhrase + "\uf8ff")
+    );
+
+    const addressQuerySnapshot = await getDocs(addressQuery);
+    addressQuerySnapshot.forEach((doc) => {
+      const data = doc.data();
+      // Only add documents where status is 'published'
+      if (data.status === "published") {
+        searchResults.push({
+          id: doc.id,
+          name: data.name,
+          address: data.address,
+          views: data.views,
+          likes: data.likes,
+          date: formatFirestoreDate(data.date),
+          pageUrl: pageUrl,
+          source: source
+        });
+      }
+    });
+
+    // Remove duplicates (in case the same document is found in both name and address search)
+    const uniqueResults = searchResults.filter((value, index, self) =>
+      index === self.findIndex((t) => t.id === value.id)
+    );
+
+    if (uniqueResults.length === 0) {
+      setNoResult(true);
+    } else {
+      setNoResult(false);
     }
-  };
+    setResults(uniqueResults); // Set the merged and unique results
+  } catch (error) {
+    console.error("Error searching Firestore:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
   
 
   return (
     <div>
+      <h1 className="main-color text-2xl font-bold text-center">بحث</h1>
       <form onSubmit={handleSearch} className="flex justify-center items-center">
         <input
           type="text"
@@ -99,10 +188,10 @@ const handleSearch = async (e: React.FormEvent) => {
         </button>
       </form>
 
-      <div className="mt-4 text-center">
+      <div className="mt-4">
         {results.length > 0 && 
             <div>
-                <h1 className="main-color font-bold text-2xl">نتائج البحث</h1>
+                <h1 className="main-color font-bold text-2xl text-center">نتائج البحث</h1>
                 <div className='flex justify-between gap-8 flex-wrap my-10'>
                     {results.map((e) => {
                     return (
@@ -114,14 +203,15 @@ const handleSearch = async (e: React.FormEvent) => {
                             views={e.views} 
                             likes={e.likes}
                             date={e.date} 
-                            pageUrl={e.pageUrl} 
+                            pageUrl={e.pageUrl}
+                            // source={e.source}
                         />
                     );
                     })}
                 </div>
             </div>
         }
-        {noResult && <p>لا توجد نتائج حالية</p>}
+        {noResult && <p className="text-lg text-center">لا توجد نتائج حالية</p>}
       </div>
       <hr />
     </div>

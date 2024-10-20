@@ -56,7 +56,6 @@ hr {
   -webkit-line-clamp: 2;
           line-clamp: 2;
   -webkit-box-orient: vertical;
-  direction: rtl;
 }
 .main-border {
   border: 1px solid var(--main-color);
@@ -69,7 +68,7 @@ hr {
   max-height: 220px;
   margin: 0 auto;
 }
-.main-banner-image, .egypt-banner-image {
+.main-banner-image, .egypt-banner-image, .saudi-banner-image {
   background-position: center;
   background-size: cover;
 }
@@ -78,6 +77,9 @@ hr {
 }
 .egypt-banner-image {
   background-image: url(./assets/egypt.jpg);
+}
+.saudi-banner-image {
+  background-image: url(./assets/saudi.jpg);
 }
 .mobile-nav-screen {
   display: block;

@@ -8,6 +8,7 @@ interface DCard {
     date?: string,
     googleMapUrl?: string,
     pageUrl: string,
+    source?: string,
 }
 
 interface DCardData {
