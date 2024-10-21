@@ -17,7 +17,7 @@ export async function generateMetadata(
   { params }: Props  ): Promise<Metadata> {
   // read route params
   
-  const data = await GetDalilById({ query: "egypt/dalil/data", id: decodeURIComponent(params.slug) });
+  const data = await GetDalilById({ query: "kuwait/dalil/data", id: decodeURIComponent(params.slug) });
   
   return {
       title: data?.name,
@@ -27,7 +27,7 @@ export async function generateMetadata(
   
 
 const page = async ( { params }: { params: { slug: string } } ) => {
-  const data = await GetDalilById({ query: "egypt/dalil/data", id: decodeURIComponent(params.slug) });
+  const data = await GetDalilById({ query: "kuwait/dalil/data", id: decodeURIComponent(params.slug) });
   
 
     const mapDetails = { mapUrl: data?.googleMapUrl };
@@ -41,7 +41,7 @@ const page = async ( { params }: { params: { slug: string } } ) => {
         <div>
           <div>
               <h1 className='second-color text-base text-right mb-4'>{data?.date}</h1>
-              <LikeButton docId={data?.id} source="egypt" initialLikes={data?.likes} initialViews={data?.views} />
+              <LikeButton docId={data?.id} source="kuwait" initialLikes={data?.likes} initialViews={data?.views} />
           </div>
           <hr />
           {/* <h1 className='main-color text-2xl text-center mt-7 font-black'>هاتف و عنوان</h1> */}

@@ -6,6 +6,7 @@ import 'swiper/css';
 // import Swiper bundle with all modules installed
 // import styles bundle
 import 'swiper/css/bundle';
+import PrimaryHeader from "./components/PrimaryHeader";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,12 +33,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+  const pages = [
+    {
+      pageName: "السعودية",
+      pageUrl: "/saudi"
+    },
+    {
+      pageName: "الامارات",
+      pageUrl: "/uae"
+    },
+    {
+      pageName: "الكويت",
+      pageUrl: "/kuwait"
+    },
+    {
+      pageName: "مصر",
+      pageUrl: "/egypt"
+    },
+  ]
+
   return (
     <html lang="ar">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <div className="container flex-grow">
+          <PrimaryHeader pages={pages} />
           {children}
         </div>
         <Footer />

@@ -68,7 +68,11 @@ hr {
   max-height: 220px;
   margin: 0 auto;
 }
-.main-banner-image, .egypt-banner-image, .saudi-banner-image {
+.main-banner-image,
+.egypt-banner-image, 
+.saudi-banner-image, 
+.kuwait-banner-image, 
+.uae-banner-image {
   background-position: center;
   background-size: cover;
 }
@@ -80,6 +84,12 @@ hr {
 }
 .saudi-banner-image {
   background-image: url(./assets/saudi.jpg);
+}
+.kuwait-banner-image {
+  background-image: url(./assets/kuwait.jpg);
+}
+.uae-banner-image {
+  background-image: url(./assets/uae.jpg);
 }
 .mobile-nav-screen {
   display: block;

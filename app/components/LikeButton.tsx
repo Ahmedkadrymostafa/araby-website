@@ -6,7 +6,7 @@ import { incrementViews } from '../controllers/EditDalil'; // Import your Firest
 
 interface LikeButtonProps {
   docId?: string;  // Document ID for the Firestore entry
-  source: string
+  source?: string
   initialLikes?: number;  // Initial number of likes to display
   initialViews?: number;   // Initial number of views to display
 }

@@ -11,7 +11,6 @@ export const incrementLikes = async (docId: string, source?: string): Promise<vo
         likes: increment(1),
       });
   
-      console.log(`Likes incremented for document ID: ${docId}`);
     } catch (error) {
       console.error("Error updating likes:", error);
       throw new Error('Failed to update likes');
@@ -19,7 +18,7 @@ export const incrementLikes = async (docId: string, source?: string): Promise<vo
 };
 
 
-export const incrementViews = async (docId: string, source: string): Promise<void> => {
+export const incrementViews = async (docId: string, source?: string): Promise<void> => {
     try {
         // Create a reference to the specific document in Firestore
         const docRef = doc(db, `${source}/dalil/data`, docId);
@@ -29,7 +28,6 @@ export const incrementViews = async (docId: string, source: string): Promise<voi
             views: increment(1),
         });
 
-        console.log(`Views incremented for document ID: ${docId}`);
     } catch (error) {
         console.error("Error updating views:", error);
         throw new Error('Failed to update views');

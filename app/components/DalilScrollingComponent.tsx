@@ -18,64 +18,6 @@ const DalilScrollingComponent: FC<IDalilScrolling> = ({ firestoreQuery, limitOfI
       fetchData(); // Fetch data when the component mounts
     }, []);
   
-    // const fetchData = async () => {
-    //   try {
-    //     // Build the query with pagination
-    //     let q = query(collection(db, firestoreQuery), limit(limitOfItems));
-  
-    //     if (lastDoc) {
-    //       q = query(collection(db, firestoreQuery), startAfter(lastDoc), limit(limitOfItems));
-    //     }
-  
-    //     const snapshot = await getDocs(q);
-    //     console.log(snapshot);
-
-    //     if (!snapshot.empty) {
-    //       const newItems: DCard[] = snapshot.docs.map(doc => {
-    //         const data = doc.data();
-    //         console.log(data);
-    //         const timestamp = data.date?.toDate(); // Convert Firestore Timestamp to JS Date
-    //         const formattedDate = timestamp
-    //           ? timestamp.toLocaleDateString('ar-EG', {
-    //               weekday: 'long',
-    //               day: 'numeric',
-    //               month: 'long',
-    //               year: 'numeric',
-    //             })
-    //           : null;
-  
-    //         return {
-    //           id: doc.id,
-    //           name: data.name || '',
-    //           address: data.address || '',
-    //           phone: data.phone || '',
-    //           views: data.views || 0,
-    //           likes: data.likes || 0,
-    //           date: formattedDate || '',
-    //           pageUrl: pageUrl,
-    //           source: source
-    //         };
-    //       });
-  
-    //       // Only update if new items exist and are different
-    //       setData(prevData => [...prevData, ...newItems.filter(item => !prevData.find(prevItem => prevItem.id === item.id))]);
-          
-    //       // Update lastDoc for pagination
-    //       setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
-  
-    //       if (newItems.length < limitOfItems) {
-    //         setHasMore(false); // Stop loading if no more documents
-    //       }
-    //     } else {
-    //       setHasMore(false); // No more documents to fetch
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching data from Firestore:", error);
-    //     setHasMore(false); // Stop loading if an error occurs
-    //   }
-    // };
-  
-
     const fetchData = async () => {
       try {
         // Build the query with pagination

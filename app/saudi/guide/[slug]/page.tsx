@@ -4,6 +4,7 @@ import Map from '@/app/components/Map';
 import { FaEarthAfrica, FaLocationDot, FaPhone } from 'react-icons/fa6';
 import LikeButton from '@/app/components/LikeButton';
 import { Metadata } from 'next';
+import { CleanPhoneNumber } from '@/app/controllers/CleanPhoneNumber';
 
 
 
@@ -42,7 +43,7 @@ const page = async ( { params }: { params: { slug: string } } ) => {
           <div>
             <div>
                 <h1 className='second-color text-base text-right mb-4'>{data?.date}</h1>
-                <LikeButton docId={data?.id} source='saudi' initialLikes={data?.likes} initialViews={data?.views} />
+                <LikeButton docId={data?.id} source="saudi" initialLikes={data?.likes} initialViews={data?.views} />
             </div>
             <hr />
             {/* <h1 className='main-color text-2xl text-center mt-7 font-black'>هاتف و عنوان</h1> */}
@@ -57,7 +58,7 @@ const page = async ( { params }: { params: { slug: string } } ) => {
               </div>
               {data?.phone && (
                 <div className='flex items-center gap-3 ml-auto flex-row-reverse'>
-                  <a href={`tel:${data?.phone}`} className='text-black text-xl hover:text-blue-500'>{data?.phone}</a>
+                  <a href={`tel:${data?.phone}`} className='text-black text-xl hover:text-blue-500'>{CleanPhoneNumber(data?.phone)}+</a>
                   <p className='flex items-center gap-3 font-bold text-xl'>
                     <FaPhone />
                     الهاتف:
@@ -68,7 +69,7 @@ const page = async ( { params }: { params: { slug: string } } ) => {
                   <p className='flex items-center gap-3 font-bold text-xl'>
                     {/* {`رابط ${data?.name} على جوجل ماب`} */}
                     <FaEarthAfrica />
-                    <a href={data?.googleMapUrl} className='text-black text-xl hover:text-blue-500'>{`رابط ${data?.name} على جوجل ماب`}</a>
+                    <a href={data?.googleMapUrl} className='text-black text-xl hover:text-blue-500'>رابط العنوان على جوجل ماب</a>
                   </p>
                 </div>
             </div>

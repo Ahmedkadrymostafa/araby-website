@@ -19,10 +19,10 @@ const PrimaryHeader: FC<PrimaryHeaderProps> = ({ pages }) => {
             <Image src={logo} width={190} height={70} alt='araby logo' />
         </Link>
         <nav className={`mobile-nav-screen ${isActive ? 'active-menu' : ''}`}>
-            <ul className='flex justify-between gap-5 items-center'>
+            <ul className='flex justify-between gap-6 items-center'>
                 {pages?.map((e) => (
                     <li key={e.pageName}>
-                        <a href={e.pageUrl} className='animated-link text-gray-500 text-xl hover:text-blue-950'>{e.pageName}</a>
+                        <a href={e.pageUrl} className='animated-link text-gray-500 text-2xl hover:text-blue-950'>{e.pageName}</a>
                     </li>
                 ))}
             </ul>
